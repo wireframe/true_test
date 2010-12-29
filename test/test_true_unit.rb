@@ -1,7 +1,26 @@
-require 'helper'
+require File.join(File.dirname(__FILE__), 'helper')
 
 class TestTrueUnit < Test::Unit::TestCase
-  should "probably rename this file and start testing for real" do
-    flunk "hey buddy, you should probably rename this file and start testing for real"
+  def self.register(key, &block)
+    attr_accessor key
+    (class << self; self end).send(:define_method, key) do
+      result = yield
+      instance_variable_set "@#{key}", result
+    end
+  end
+
+  register :basic_user do
+    'foo'
+  end
+
+  def self.with(scope = nil, &block)
+    yield
+  end
+
+
+  #########################
+  
+  with basic_user do
+    puts @basic_user
   end
 end
