@@ -24,19 +24,25 @@ class TestTrueUnit < Test::Unit::TestCase
   end
   def self.asserts(message = nil, &block)
     @@assertion = message
+    puts test_sentence
     result = yield
     raise Test::Unit::AssertionFailedError.new(test_sentence) unless result
   ensure
     @@assertion = nil
   end
   def self.test_sentence
-    ['assert', @@assertion, 'when executing', @@execution, 'with', @@fixtures.join(' and ')].join(' ')
+    context = ['assert', @@assertion, 'when executing', @@execution]
+    context += ['with', @@fixtures.join(' and ')] if @@fixtures && @@fixtures.any?
+    context.join(' ')
   end
 
   # declare fixtures
   class User
     def do_something
-      puts 'doing something'
+      @did_something = true
+    end
+    def did_something?
+      @did_something
     end
   end
   class Blog
@@ -54,7 +60,7 @@ class TestTrueUnit < Test::Unit::TestCase
       @a_basic_user.do_something
     end
     asserts 'did something' do
-      false
+      @a_basic_user.did_something?
     end
   end
 end
