@@ -6,21 +6,34 @@ class TestTrueUnit < Test::Unit::TestCase
     (class << self; self end).send(:define_method, key) do
       result = yield
       instance_variable_set "@#{key}", result
+      self
     end
-  end
-
-  register :basic_user do
-    'foo'
   end
 
   def self.with(scope = nil, &block)
     yield
   end
 
+  def self.when
+  end
+
+  class User
+  end
+  register :basic_user do
+    User.new
+  end
+
+  class Blog
+  end
+  register :basic_blog do
+    Blog.new
+  end
+
 
   #########################
   
-  with basic_user do
-    puts @basic_user
+  with basic_user.basic_blog do
+    puts @basic_user.inspect
+    puts @basic_blog.inspect
   end
 end
