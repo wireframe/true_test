@@ -1,5 +1,12 @@
 module TrueUnit
   class Context
+    class << self
+      def current
+        @@context ||= TrueUnit::Context.new
+        @@context
+      end
+    end
+
     def fixtures
       @fixtures ||= []
       @fixtures
@@ -8,11 +15,8 @@ module TrueUnit
       @fixtures.clear
       @@context = nil
     end
-    class << self
-      def current
-        @@context ||= TrueUnit::Context.new
-        @@context
-      end
+    def description
+      fixtures.any? ? ['with', fixtures.join(' and ').gsub('_', ' ')] : ''
     end
   end
 end

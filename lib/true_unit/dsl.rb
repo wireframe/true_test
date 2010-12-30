@@ -35,9 +35,7 @@ module TrueUnit
     end
 
     def test_sentence
-      context = ['assert', @@assertion, 'when executing', @@execution]
-      context += ['with', TrueUnit::Context.current.fixtures.join(' and ')] if TrueUnit::Context.current.fixtures.any?
-      context.join(' ')
+      ['assert', @@assertion, 'when executing', @@execution, TrueUnit::Context.current.description].join(' ')
     end
   end
 end
