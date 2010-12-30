@@ -7,10 +7,14 @@ module TrueUnit
     end
     def evaluate
       result = TrueUnit::Context.current.evaluate(&@block)
-      raise Test::Unit::AssertionFailedError.new(test_sentence) unless result
+      if @positive
+        raise Test::Unit::AssertionFailedError.new(description) unless result
+      else
+        raise Test::Unit::AssertionFailedError.new(description) if result
+      end
     end
     def description
-      ["*", (@positive ? 'should' : 'should not'), @description, TrueUnit::Context.current.description].join(' ')
+      [(@positive ? 'should' : 'should not'), @description, TrueUnit::Context.current.description].join(' ')
     end
   end
 

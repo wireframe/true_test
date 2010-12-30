@@ -40,6 +40,5 @@ module TrueUnit
       puts assertion.description
       assertion.evaluate
     end
-
   end
 end
