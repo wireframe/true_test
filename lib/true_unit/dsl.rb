@@ -1,10 +1,9 @@
 module TrueUnit
   module DSL
-    @@fixtures = []
     def register_fixture(key, &block)
       attr_accessor key
       (class << self; self end).send(:define_method, key) do
-        @@fixtures << key
+        TrueUnit::Context.current.fixtures << key
         result = yield
         instance_variable_set "@#{key}", result
         self
@@ -14,10 +13,10 @@ module TrueUnit
     def with(fixtures, &block)
       yield
     ensure
-      @@fixtures.each do |fixture|
+      TrueUnit::Context.current.fixtures.each do |fixture|
         instance_variable_set "@#{fixture}", nil
       end
-      @@fixtures = []
+      TrueUnit::Context.current.teardown
       @@execution = nil
     end
 
@@ -37,7 +36,7 @@ module TrueUnit
 
     def test_sentence
       context = ['assert', @@assertion, 'when executing', @@execution]
-      context += ['with', @@fixtures.join(' and ')] if @@fixtures && @@fixtures.any?
+      context += ['with', TrueUnit::Context.current.fixtures.join(' and ')] if TrueUnit::Context.current.fixtures.any?
       context.join(' ')
     end
   end
