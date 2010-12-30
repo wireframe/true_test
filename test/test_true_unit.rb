@@ -34,5 +34,6 @@ class TestTrueUnit < Test::Unit::TestCase
     should_not 'have did_something_else?' do
       @a_basic_user.did_something_else?
     end
+    should 'have done some other stuff, but not yet implemented'
   end
 end
