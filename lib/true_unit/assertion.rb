@@ -19,4 +19,10 @@ module TrueUnit
       super(description, true, &block)
     end
   end
+
+  class NegativeAssertion < Assertion
+    def initialize(description = nil, &block)
+      super(description, false, &block)
+    end
+  end
 end

@@ -10,6 +10,9 @@ class TestTrueUnit < Test::Unit::TestCase
     def did_something?
       @did_something
     end
+    def did_something_else?
+      @did_something_else
+    end
   end
   class Blog
   end
@@ -27,6 +30,9 @@ class TestTrueUnit < Test::Unit::TestCase
     end
     should 'have did_something?' do
       @a_basic_user.did_something?
+    end
+    should_not 'have did_something_else?' do
+      @a_basic_user.did_something_else?
     end
   end
 end

@@ -35,6 +35,11 @@ module TrueUnit
       puts assertion.description
       assertion.evaluate
     end
+    def should_not(description = nil, &block)
+      assertion = TrueUnit::NegativeAssertion.new(description, &block)
+      puts assertion.description
+      assertion.evaluate
+    end
 
   end
 end
