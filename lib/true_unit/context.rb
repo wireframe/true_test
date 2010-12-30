@@ -15,8 +15,26 @@ module TrueUnit
       @fixtures.clear
       @@context = nil
     end
-    def description
-      fixtures.any? ? ['with', fixtures.join(' and ').gsub('_', ' ')] : ''
+    def evaluate(&block)
+      self.instance_eval(&block)
     end
+    def description
+      parts = []
+      parts += ['when executing', @setup] if @setup
+      parts += ['with', fixtures.join(' and ').gsub('_', ' ')] if fixtures.any?
+      parts.join(' ')
+    end
+
+    def setup(description = nil, &block)
+      @setup = description
+      evaluate &block
+    end
+
+    def should(description = nil, &block)
+      assertion = TrueUnit::PositiveAssertion.new(description, &block)
+      puts assertion.description
+      assertion.evaluate
+    end
+
   end
 end

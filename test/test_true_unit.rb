@@ -22,10 +22,10 @@ class TestTrueUnit < Test::Unit::TestCase
 
   #write tests
   with a_basic_user.a_basic_blog do
-    execute '@a_basic_user.do_something' do
+    setup '@a_basic_user.do_something' do
       @a_basic_user.do_something
     end
-    asserts 'did something' do
+    should 'have did_something?' do
       @a_basic_user.did_something?
     end
   end
