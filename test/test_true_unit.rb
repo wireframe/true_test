@@ -1,8 +1,7 @@
 require File.join(File.dirname(__FILE__), 'helper')
+require File.join(File.dirname(__FILE__), '..', 'lib', 'true_unit', 'compatibility', 'test_unit')
 
 class TestTrueUnit < Test::Unit::TestCase
-  extend TrueUnit
-
   # declare fixtures
   class User
     def do_something
