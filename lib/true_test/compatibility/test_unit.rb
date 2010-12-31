@@ -1,3 +1,3 @@
 class Test::Unit::TestCase
-  extend TrueUnit
+  extend TrueTest::DSL
 end

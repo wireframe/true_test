@@ -1,4 +1,4 @@
-module TrueUnit
+module TrueTest
   class Assertion
     def initialize(description = nil, positive = true, &block)
       @description = description
@@ -6,7 +6,7 @@ module TrueUnit
       @block = block || proc {false}
     end
     def evaluate
-      result = TrueUnit::Context.current.evaluate(&@block)
+      result = TrueTest::Context.current.evaluate(&@block)
       if @positive
         raise Test::Unit::AssertionFailedError.new(description) unless result
       else
@@ -14,7 +14,7 @@ module TrueUnit
       end
     end
     def description
-      [(@positive ? 'should' : 'should not'), @description, TrueUnit::Context.current.description].join(' ')
+      [(@positive ? 'should' : 'should not'), @description, TrueTest::Context.current.description].join(' ')
     end
   end
 

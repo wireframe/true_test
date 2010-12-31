@@ -12,12 +12,12 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "true_unit"
-  gem.homepage = "http://github.com/wireframe/true_unit"
+  gem.name = "true_test"
+  gem.homepage = "http://github.com/wireframe/true_test"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
-  gem.email = "ryan@socialcast.com"
+  gem.summary = %Q{Ruby testing framework for writing *true* tests}
+  gem.description = %Q{Ruby testing framework for writing *true* tests}
+  gem.email = "ryan@codecrate.com"
   gem.authors = ["Ryan Sonnek"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
   # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
@@ -47,7 +47,7 @@ Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "true_unit #{version}"
+  rdoc.title = "true_test #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end

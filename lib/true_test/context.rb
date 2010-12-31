@@ -1,8 +1,8 @@
-module TrueUnit
+module TrueTest
   class Context
     class << self
       def current
-        @@context ||= TrueUnit::Context.new
+        @@context ||= TrueTest::Context.new
         @@context
       end
     end
@@ -31,12 +31,12 @@ module TrueUnit
     end
 
     def should(description = nil, &block)
-      assertion = TrueUnit::PositiveAssertion.new(description, &block)
+      assertion = TrueTest::PositiveAssertion.new(description, &block)
       puts assertion.description
       assertion.evaluate
     end
     def should_not(description = nil, &block)
-      assertion = TrueUnit::NegativeAssertion.new(description, &block)
+      assertion = TrueTest::NegativeAssertion.new(description, &block)
       puts assertion.description
       assertion.evaluate
     end
