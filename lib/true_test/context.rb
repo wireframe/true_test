@@ -21,7 +21,7 @@ module TrueTest
     def description
       parts = []
       parts += ['when executing', @setup] if @setup
-      parts += ['with', fixtures.join(' and ').gsub('_', ' ')] if fixtures.any?
+      parts += ['with', fixtures.collect(&:description).join(' and ')] if fixtures.any?
       parts.join(' ')
     end
 
