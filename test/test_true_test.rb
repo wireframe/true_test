@@ -13,6 +13,9 @@ class TestTrueTest < Test::Unit::TestCase
     def did_something_else?
       @did_something_else
     end
+    def blow_up!
+      raise 'holy crap!'
+    end
   end
   class Blog
   end
@@ -35,5 +38,8 @@ class TestTrueTest < Test::Unit::TestCase
       @a_basic_user.did_something_else?
     end
     should 'have done some other stuff, but not yet implemented'
+    should 'report exceptions with backtrace' do
+      @a_basic_user.blow_up!
+    end
   end
 end
