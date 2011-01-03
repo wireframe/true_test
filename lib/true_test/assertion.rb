@@ -6,12 +6,23 @@ module TrueTest
       @block = block || proc {false}
     end
     def evaluate
-      result = TrueTest::Context.current.evaluate(&@block)
-      if @positive
-        raise Test::Unit::AssertionFailedError.new(description) unless result
-      else
-        raise Test::Unit::AssertionFailedError.new(description) if result
+      @passed = false
+      begin
+        @result = TrueTest::Context.current.evaluate(&@block)
+        @passed = @positive ? @result : !@result
+      rescue => e
+        @error = e
       end
+    ensure
+      TrueTest.after_assertion_callbacks.each do |callback|
+        callback.call(self)
+      end
+    end
+    def passed?
+      @passed
+    end
+    def error
+      @error
     end
     def description
       [(@positive ? 'should' : 'should not'), @description, TrueTest::Context.current.description].join(' ')

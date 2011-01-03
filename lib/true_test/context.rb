@@ -32,12 +32,10 @@ module TrueTest
 
     def should(description = nil, &block)
       assertion = TrueTest::PositiveAssertion.new(description, &block)
-      puts assertion.description
       assertion.evaluate
     end
     def should_not(description = nil, &block)
       assertion = TrueTest::NegativeAssertion.new(description, &block)
-      puts assertion.description
       assertion.evaluate
     end
   end
