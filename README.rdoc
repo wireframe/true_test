@@ -1,8 +1,48 @@
-= true_unit
+= true_test
 
-Description goes here.
+Ruby framework for writing a *True Test*
 
-== Contributing to true_unit
+= What is a *True Test*?
+
+see http://blog.codecrate.com/2010/12/anatomy-of-effective-unit-test.html
+
+* One assertion per test. No more...no less
+* Clear separation of setup and assertions
+
+
+== Features
+
+* Support for multiple assertions with a single setup for fast test execution
+* Integrates with core Ruby Test::Unit library
+
+
+== Example
+
+  class BlogTest < Test::Unit::TestCase
+    #register reusable fixtures
+    register_fixture :a_basic_user do
+      User.new
+    end
+    register_fixture :a_basic_blog do
+      Blog.new
+    end
+
+    with :a_basic_user, :a_basic_blog do
+      setup 'executing @a_basic_user.do_something' do
+        @a_basic_user.do_something
+      end
+
+      should 'have did_something?' do
+        @a_basic_user.did_something?
+      end
+      should_not 'have did_something_else?' do
+        @a_basic_user.did_something_else?
+      end
+      should 'do some other stuff, but not yet implemented'
+    end
+  end
+
+== Contributing to true_test
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
