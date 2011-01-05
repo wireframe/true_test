@@ -25,5 +25,9 @@ module TrueTest
       parts += ['with', fixtures.collect(&:description).join(' and ')] if fixtures.any?
       parts.join(' ')
     end
+    #safe evaluation that creates a failed test if an exception is raised instead of blowing up entire suite
+    def evaluate(binding, &block)
+      TrueTest::PositiveAssertion.new('not raise error', &block).evaluate binding
+    end
   end
 end

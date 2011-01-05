@@ -49,4 +49,13 @@ class TestTrueTest < Test::Unit::TestCase
       @a_basic_user.blow_up!
     end
   end
+
+  with :a_basic_user do
+    setup 'executing @a_basic_user.blow_up!' do
+      @a_basic_user.blow_up!
+    end
+
+    should 'get here without erroring'
+  end
+
 end

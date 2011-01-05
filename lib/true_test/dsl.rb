@@ -4,17 +4,19 @@ module TrueTest
       TrueTest::Fixture.register key, &block
     end
 
+    def current_context
+      TrueTest::Context.current
+    end
     def with(*fixtures, &block)
       fixtures.each do |key|
         TrueTest::Fixture.evaluate key, self
       end
-      yield
-    ensure
-      TrueTest::Context.current.teardown self
+      current_context.evaluate self, &block
+      current_context.teardown self
     end
 
     def setup(description = nil, &block)
-      TrueTest::Context.current.setup = description
+      current_context.setup = description
       yield
     end
 
