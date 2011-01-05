@@ -31,6 +31,12 @@ class TestTrueTest < Test::Unit::TestCase
     setup '@a_basic_user.do_something' do
       @a_basic_user.do_something
     end
+    should 'define @a_basic_user' do
+      defined? @a_basic_user
+    end
+    should 'define @a_basic_blog' do
+      defined? @a_basic_user
+    end
     should 'have did_something?' do
       @a_basic_user.did_something?
     end

@@ -5,10 +5,10 @@ module TrueTest
       @positive = positive
       @block = block || proc {false}
     end
-    def evaluate
+    def evaluate(binding)
       @passed = false
       begin
-        @result = TrueTest::Context.current.evaluate(&@block)
+        @result = binding.instance_eval &@block
         @passed = @positive ? @result : !@result
       rescue => e
         @error = e

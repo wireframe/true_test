@@ -1,5 +1,6 @@
 module TrueTest
   class Context
+    attr_accessor :setup
     class << self
       def current
         @@context ||= TrueTest::Context.new
@@ -11,32 +12,18 @@ module TrueTest
       @fixtures ||= []
       @fixtures
     end
-    def teardown
+    def teardown(binding)
+      @fixtures.each do |fixture|
+        fixture.unbind binding
+      end
       @fixtures.clear
       @@context = nil
-    end
-    def evaluate(&block)
-      self.instance_eval(&block)
     end
     def description
       parts = []
       parts += ['when executing', @setup] if @setup
       parts += ['with', fixtures.collect(&:description).join(' and ')] if fixtures.any?
       parts.join(' ')
-    end
-
-    def setup(description = nil, &block)
-      @setup = description
-      evaluate &block
-    end
-
-    def should(description = nil, &block)
-      assertion = TrueTest::PositiveAssertion.new(description, &block)
-      assertion.evaluate
-    end
-    def should_not(description = nil, &block)
-      assertion = TrueTest::NegativeAssertion.new(description, &block)
-      assertion.evaluate
     end
   end
 end

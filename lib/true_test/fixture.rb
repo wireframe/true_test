@@ -5,10 +5,10 @@ module TrueTest
       def register(key, &block)
         registry[key] = TrueTest::Fixture.new(key, &block)
       end
-      def evaluate(key)
+      def evaluate(key, binding)
         fixture = registry[key]
         raise "No fixture found in registry with key #{key}: #{registry.keys.inspect}" unless fixture
-        fixture.evaluate
+        fixture.evaluate binding
       end
       def registry
         @@registry ||= {}
@@ -22,13 +22,13 @@ module TrueTest
     def description
       @key.to_s.gsub('_', ' ')
     end
-    def evaluate
+    def evaluate(binding)
       TrueTest::Context.current.fixtures << self
-      @result = TrueTest::Context.current.evaluate &@block
-      TrueTest::Context.current.instance_variable_set "@#{@key}", @result
+      @result = binding.instance_eval &@block
+      binding.instance_variable_set "@#{@key}", @result
     end
-    def unbind
-      TrueTest::Context.current.instance_variable_set "@#{@key}", nil
+    def unbind(binding)
+      binding.instance_variable_set "@#{@key}", nil
     end
   end
 end
