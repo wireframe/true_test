@@ -28,9 +28,10 @@ class TestTrueTest < Test::Unit::TestCase
 
   #write tests
   with :a_basic_user, :a_basic_blog do
-    setup '@a_basic_user.do_something' do
+    setup 'executing @a_basic_user.do_something' do
       @a_basic_user.do_something
     end
+
     should 'define @a_basic_user' do
       defined? @a_basic_user
     end

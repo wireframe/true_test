@@ -32,22 +32,3 @@ module TrueTest
     end
   end
 end
-
-class Object
-  def metaclass
-    (class << self; self end)
-  end
-end
-
-class Hash
-  def to_mod
-    hash = self
-    Module.new do
-      hash.each_pair do |key, value|
-        define_method key do
-          value
-        end
-      end
-    end
-  end
-end
