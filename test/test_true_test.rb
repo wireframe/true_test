@@ -48,9 +48,6 @@ class TestTrueTest < Test::Unit::TestCase
       @a_basic_user.did_something_else?
     end
     should 'have done some other stuff, but not yet implemented'
-    should 'report exceptions with backtrace' do
-      @a_basic_user.blow_up!
-    end
   end
 
   with :a_basic_user do

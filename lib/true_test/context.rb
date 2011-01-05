@@ -9,9 +9,10 @@ module TrueTest
     end
 
     def setup_fixtures(binding, keys)
+      context = self
       keys.each do |key|
         self.evaluate binding do
-          fixtures << TrueTest::Fixture.evaluate(key, binding)
+          context.fixtures << TrueTest::Fixture.evaluate(key, binding)
         end
       end
     end
@@ -34,7 +35,11 @@ module TrueTest
     end
     #safe evaluation that creates a failed test if an exception is raised instead of blowing up entire suite
     def evaluate(binding, &block)
-      TrueTest::PositiveAssertion.new('not raise error', &block).evaluate binding
+      begin
+        binding.instance_eval &block
+      rescue => e
+        TrueTest::PositiveAssertion.new('not raise error', &block).evaluate binding
+      end
     end
   end
 end
