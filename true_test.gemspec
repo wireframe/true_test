@@ -31,7 +31,8 @@ Gem::Specification.new do |s|
     "lib/true_test/dsl.rb",
     "lib/true_test/fixture.rb",
     "test/helper.rb",
-    "test/test_true_test.rb"
+    "test/test_true_test.rb",
+    "true_test.gemspec"
   ]
   s.homepage = %q{http://github.com/wireframe/true_test}
   s.licenses = ["MIT"]
