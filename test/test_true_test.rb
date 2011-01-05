@@ -27,7 +27,7 @@ class TestTrueTest < Test::Unit::TestCase
   end
 
   #write tests
-  with a_basic_user.a_basic_blog do
+  with :a_basic_user, :a_basic_blog do
     setup '@a_basic_user.do_something' do
       @a_basic_user.do_something
     end

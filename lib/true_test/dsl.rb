@@ -4,9 +4,12 @@ module TrueTest
       (class << self; self end)
     end
     def register_fixture(key, &block)
-      TrueTest::Fixture.new(key, self, &block)
+      TrueTest::Fixture.register key, &block
     end
-    def with(fixtures, &block)
+    def with(*fixtures, &block)
+      fixtures.each do |key|
+        TrueTest::Fixture.evaluate key
+      end
       TrueTest::Context.current.evaluate &block
     ensure
       TrueTest::Context.current.fixtures.each do |fixture|

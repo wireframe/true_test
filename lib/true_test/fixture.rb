@@ -1,18 +1,23 @@
 module TrueTest
   class Fixture
-    attr_accessor :key, :binding, :block
-    def initialize(key, binding, &block)
-      @key = key
-      @block = block
-      @binding = binding
-
-      create_accessor_method
-    end
-    def create_accessor_method
-      fixture = self
-      @binding.metaclass.send(:define_method, @key) do
+    attr_accessor :key, :block
+    class << self
+      def register(key, &block)
+        registry[key] = TrueTest::Fixture.new(key, &block)
+      end
+      def evaluate(key)
+        fixture = registry[key]
+        raise "No fixture found in registry with key #{key}: #{registry.keys.inspect}" unless fixture
         fixture.evaluate
       end
+      def registry
+        @@registry ||= {}
+        @@registry
+      end
+    end
+    def initialize(key, &block)
+      @key = key
+      @block = block
     end
     def description
       @key.to_s.gsub('_', ' ')
@@ -21,10 +26,9 @@ module TrueTest
       TrueTest::Context.current.fixtures << self
       @result = TrueTest::Context.current.evaluate &@block
       TrueTest::Context.current.instance_variable_set "@#{@key}", @result
-      @binding
     end
     def unbind
-      binding.instance_variable_set "@#{@key}", nil
+      TrueTest::Context.current.instance_variable_set "@#{@key}", nil
     end
   end
 end
