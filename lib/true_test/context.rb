@@ -16,16 +16,16 @@ module TrueTest
         end
       end
     end
+    def teardown(binding)
+      fixtures.each do |fixture|
+        fixture.unbind binding
+      end
+      fixtures.clear
+      @@context = nil
+    end
     def fixtures
       @fixtures ||= []
       @fixtures
-    end
-    def teardown(binding)
-      @fixtures.each do |fixture|
-        fixture.unbind binding
-      end
-      @fixtures.clear
-      @@context = nil
     end
     def description
       parts = []
