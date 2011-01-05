@@ -8,6 +8,13 @@ module TrueTest
       end
     end
 
+    def setup_fixtures(binding, keys)
+      keys.each do |key|
+        self.evaluate binding do
+          fixtures << TrueTest::Fixture.evaluate(key, binding)
+        end
+      end
+    end
     def fixtures
       @fixtures ||= []
       @fixtures

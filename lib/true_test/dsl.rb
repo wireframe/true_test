@@ -8,9 +8,7 @@ module TrueTest
       TrueTest::Context.current
     end
     def with(*fixtures, &block)
-      fixtures.each do |key|
-        TrueTest::Fixture.evaluate key, self
-      end
+      current_context.setup_fixtures self, fixtures
       current_context.evaluate self, &block
       current_context.teardown self
     end

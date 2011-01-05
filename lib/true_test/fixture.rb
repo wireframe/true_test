@@ -9,6 +9,7 @@ module TrueTest
         fixture = registry[key]
         raise "No fixture found in registry with key #{key}: #{registry.keys.inspect}" unless fixture
         fixture.evaluate binding
+        fixture
       end
       def registry
         @@registry ||= {}
@@ -23,7 +24,6 @@ module TrueTest
       @key.to_s.gsub('_', ' ')
     end
     def evaluate(binding)
-      TrueTest::Context.current.fixtures << self
       @result = binding.instance_eval &@block
       binding.instance_variable_set "@#{@key}", @result
     end

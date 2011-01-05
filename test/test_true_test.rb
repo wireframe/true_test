@@ -25,6 +25,9 @@ class TestTrueTest < Test::Unit::TestCase
   register_fixture :a_basic_blog do
     Blog.new
   end
+  register_fixture :a_bad_fixture do
+    raise 'boom!'
+  end
 
   #write tests
   with :a_basic_user, :a_basic_blog do
@@ -55,7 +58,10 @@ class TestTrueTest < Test::Unit::TestCase
       @a_basic_user.blow_up!
     end
 
-    should 'get here without erroring'
+    should 'error out before getting here, but not break the whole suite'
   end
 
+  with :a_bad_fixture do
+    should 'error out before getting here, but not break the whole suite'
+  end
 end
